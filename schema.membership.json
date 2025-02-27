@@ -1,0 +1,105 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Membership Profile",
+    "type": "object",
+    "properties": {
+      "Membership": {
+        "type": "object",
+        "properties": {
+          "LastName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 20,
+            "description": "The last name of the member."
+          },
+          "GivenName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 20,
+            "description": "The given name of the member."
+          },
+          "MiddleName": {
+            "type": ["string", "null"],
+            "minLength": 2,
+            "maxLength": 20,
+            "description": "The middle name of the member. Can be null."
+          },
+          "Birthdate": {
+            "type": "object",
+            "properties": {
+              "Year": {
+                "type": "integer",
+                "minimum": 1900,
+                "maximum": 2024,
+                "description": "The year of birth."
+              },
+              "Month": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12,
+                "description": "The month of birth (1-12)."
+              },
+              "Day": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 31,
+                "description": "The day of birth (1-31)."
+              }
+            },
+            "required": ["Year", "Month", "Day"]
+          },
+          "Gender": {
+            "type": "string",
+            "enum": ["M", "F"],
+            "description": "The gender of the member (M or F)."
+          },
+          "ContactDetails": {
+            "type": "object",
+            "properties": {
+              "MobileNumber": {
+                "type": "string",
+                "pattern": "^0\\d{10}$",
+                "description": "The mobile number of the member. Must be 11 digits starting with 0."
+              },
+              "EmailAddress": {
+                "type": "string",
+                "format": "email",
+                "description": "The email address of the member."
+              }
+            },
+            "required": ["MobileNumber", "EmailAddress"]
+          },
+          "Interests": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "description": "An array of the member's interests. Must have at least one interest."
+          }
+        },
+        "required": ["LastName", "GivenName", "Birthdate", "Gender", "ContactDetails", "Interests"]
+      },
+      "Platforms": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Platform": {
+              "type": "string",
+              "enum": ["PC", "Playstation", "XBox"],
+              "description": "The name of the platform."
+            },
+            "Enabled": {
+              "type": "boolean",
+              "description": "Whether the platform is enabled."
+            }
+          },
+          "required": ["Platform", "Enabled"]
+        },
+        "minItems": 1,
+        "description": "An array of platforms and their enabled status. Must have at least one platform."
+      }
+    },
+    "required": ["Membership", "Platforms"]
+  }
